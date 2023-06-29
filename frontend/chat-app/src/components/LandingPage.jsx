@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import io from "socket.io-client"
 const socket = io();
 
 const LandingPage = () => {
+    const navigate = useNavigate();
     const [data, setData] = useState("");
     useEffect(() => {
         socket.on("WelcomeEmit", (data) => {
@@ -10,10 +12,9 @@ const LandingPage = () => {
         })
     }, [])//every time the page loads connect to socket
     const createRoom = () => {
-        alert("Hey there");
+        //when this function is triggered the path must be changed programitically so use History from react-router-dom
+        navigate("/Room")
     }
-
-
 
     return (
         <div className="flex flex-col items-center justify-center h-screen">
