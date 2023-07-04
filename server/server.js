@@ -7,6 +7,7 @@ var server = http.createServer(app);
 var cors = require("cors");
 var socket = io(server);
 app.use(cors());
+const PORT = process.env.PORT || 8090;
 
 app.use(express.static(path.join(__dirname, "../frontend/chat-app/dist")));
 //handle the routes
@@ -25,11 +26,10 @@ socket.on("connection", (port) => {
   });
 
   port.on("send_message", (data) => {
-
     port.to(data.room).emit("recive_message", data);
   });
 });
 
-server.listen(8090, () => {
-  console.log("Running in port number 8090");
+server.listen(PORT, () => {
+  console.log(`Running in port number ${PORT}`);
 });
