@@ -13,24 +13,20 @@ app.use(express.static(path.join(__dirname, "../frontend/chat-app/dist")));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "../frontend/chat-app", "index.html"));
 });
-app.get("/Room", (req, res) => {
-  //create a room in socket
-  socket.on("createRoom", (room) => {
-    console.log("Room Created");
-    socket.join(room);
-  });
-});
 
 //socket connection and event emmission
 socket.on("connection", (port) => {
   console.log(
     "A new User Connected with ip address: " + port.handshake.address
   );
-  setTimeout(() => {
-    port.emit("WelcomeEmit", {
-      description: "Welcome to the Chat App",
-    });
-  }, 4000);
+  port.on("Join_room", (data) => {
+    port.join(data);
+    console.log(`User With IP ${port.handshake.address} joined room ${data}`);
+  });
+
+  port.on("send_message", (data) => {
+    console.log(data);
+  });
 });
 
 server.listen(8090, () => {
