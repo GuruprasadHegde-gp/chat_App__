@@ -26,6 +26,7 @@ socket.on("connection", (port) => {
 
   port.on("send_message", (data) => {
     console.log(data);
+    port.to(data.room).emit("recive_message", data);
   });
 });
 
