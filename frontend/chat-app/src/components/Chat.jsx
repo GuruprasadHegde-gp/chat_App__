@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import ScrollToBottom from "react-scroll-to-bottom";
 
 
 const Chat = ({ socket, username, roomId }) => {
@@ -32,28 +33,30 @@ const Chat = ({ socket, username, roomId }) => {
                 <p>Live Chat</p>
             </div>
             <div className='chat-body'>
-                {
-                    messageList.map((messagecontent) => {
+                <ScrollToBottom className='message-container'>
 
-                        return (
-                            // eslint-disable-next-line react/jsx-key
-                            <div className='message' id={username === messagecontent.author ? "you" : "other"}>
-                                <div>
-                                    <div className='message-content'>
-                                        <p>
-                                            {messagecontent.data}
-                                        </p>
+                    {
+                        messageList.map((messagecontent) => {
+
+                            return (
+                                // eslint-disable-next-line react/jsx-key
+                                <div className='message' id={username === messagecontent.author ? "you" : "other"}>
+                                    <div>
+                                        <div className='message-content'>
+                                            <p>
+                                                {messagecontent.data}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div className=' message-meta'>
+                                        <p id="time">{messagecontent.time}</p>
+                                        <p id="author">{messagecontent.author}</p>
                                     </div>
                                 </div>
-                                <div className=' message-meta'>
-                                    <p id="time">{messagecontent.time}</p>
-                                    <p id="author">{messagecontent.author}</p>
-                                </div>
-                            </div>
-                        )
-                    })
-                }
-
+                            )
+                        })
+                    }
+                </ScrollToBottom>
             </div>
             <div className='chat-footer'>
                 <input type="text" placeholder='Send A Message...' onChange={(event) => {
