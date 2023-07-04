@@ -22,7 +22,7 @@ const Chat = ({ socket, username, roomId }) => {
     }
     useEffect(() => {
         socket.on("recive_message", (data) => {
-            alert(data.data);
+
             setMessageList((list) => [...list, data]);
         })
     }, [socket])
